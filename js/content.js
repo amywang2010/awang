@@ -352,7 +352,7 @@
       title: 'The garden behind the cottage',
       body: [
         'You found it. There is no prize here, just the thing I actually wanted to say.',
-        'I started building this site because a list of awards is a terrible portrait of a person. The real version is: I like problems that stay open, I work best at 1 a.m., I keep a folder of papers I have not read yet, and I am genuinely unsure what I will be doing in ten years. If you are reading this, you are probably someone who looked closely at something. That is the whole personality test.',
+        'I started building this site because a list of awards is a terrible portrait of a person. The real version is: I like problems that stay open, I work best at 1 a.m., and I keep a folder of papers I have not read yet. I still do not know what I will be doing in ten years. If you got this far, you are the sort of person who clicks things twice, which I appreciate.',
         'The purple bird\u2019s name is Marmalade. She has been on that monitor since Tuesday.'
       ]
     }

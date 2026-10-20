@@ -9,6 +9,7 @@
   var defaults = {
     seenIntro: false,
     seenAbout: false,
+    seenGuide: false,
     secretUnlocked: false,
     cranes: [],
     night: false,
@@ -39,6 +40,7 @@
     state.cranes = [];
     state.night = false;
     state.seenAbout = false;
+    state.seenGuide = false;
     AW.save();
   };
 

@@ -33,8 +33,8 @@
       paragraphs: [
         'I am in Grade 11 in the IB programme at St. Robert Catholic High School in Richmond Hill, Ontario. Most of the time I am not in Richmond Hill: I work with the Kellis Lab at MIT CSAIL on Mantis, a platform that turns fragmented scientific data into maps you can navigate. I sit on the lab\u2019s executive leadership team and lead the platform\u2019s research direction as Lead Admiral.',
         'The questions I keep returning to are about trust. A paper says two cell types interact in a tumour. That claim depends on which cell owned which RNA molecule, which depends on a segmentation decision nobody fully controls. A docking pipeline ranks a million compounds, and the ranking means nothing if the scoring function has never met an honest test. I like building the part of the pipeline that checks the number rather than the part that produces it.',
-        'Before the lab, there was a science fair project about retinal imaging and Alzheimer\u2019s that turned into a gold medal at CWSF and, more importantly, a reason to learn statistics properly. Alongside research I run Heartware, a documentary and workshop programme with seniors in care homes, now in its eighth round of funding. I also play flute and piano, teach swimming, and lose arguments to my own poetry drafts.',
-        'I am not sure yet whether I end up in a lab, a clinic, or somewhere in between. I am fairly sure it will involve messy data and long evenings.'
+        'Before the lab I built a retinal imaging project for Alzheimer\u2019s. It won gold at CWSF, which was nice, and taught me statistics properly, which mattered more. Alongside research I run Heartware, a documentary and workshop programme with seniors in care homes, now in its eighth round of funding. I also play flute and piano, teach swimming, and lose arguments to my own poetry drafts.',
+        'I do not know yet whether I end up in a lab or a clinic. Either way it will involve messy data and long evenings.'
       ],
       facts: [
         { k: 'School', v: 'St. Robert C.H.S., IB Programme' },
@@ -44,7 +44,7 @@
         { k: 'Instruments', v: 'Flute and piano, RCM Level 10' },
         { k: 'Certifications', v: 'National Lifeguard, Standard First Aid / CPR-C' }
       ],
-      note: 'If you only read one thing here, read the certified statistics work. It is the one I would defend in a room full of statisticians.',
+      note: 'The certified statistics work is the one I would defend in a room full of statisticians.',
       photo: {
         src: 'assets/profile.webp',
         alt: 'Amy Wang at the Canada-Wide Science Fair',
@@ -52,7 +52,7 @@
       }
     },
 
-    researchIntro: 'Six things I have built or found, roughly in order of how much they kept me up at night.',
+    researchIntro: 'Seven projects, roughly in order of how long they have been running.',
 
     research: [
       {
@@ -72,7 +72,7 @@
           { value: '159', label: 'intervals, machine-verified' },
           { value: '2', label: 'tissues where ESR1\u2013PGR flips' }
         ],
-        note: 'The uncomfortable result is the point: a large share of what the field calls significant is an artifact of one segmentation choice.'
+        note: 'A large share of what the field calls significant is an artifact of one segmentation choice. That is the part worth saying out loud.'
       },
       {
         id: 'drug',
@@ -312,17 +312,18 @@
           linkLabel: 'Press'
         },
         {
-          title: 'The field you are standing in',
-          sub: 'This site',
-          body: 'Hand-drawn SVG, a canvas meadow, procedural character animation, and a small generative soundtrack. No frameworks.',
-          link: null
+          title: 'CNScope',
+          sub: 'Mantis · Drosophila connectomics',
+          body: 'Fly brain wiring diagrams cross-referenced against FlyBase genetics inside Mantis, so a circuit and the genes behind it sit in the same map instead of two tabs.',
+          link: 'https://mantis.csail.mit.edu',
+          linkLabel: 'mantis.csail.mit.edu'
         }
       ]
     },
 
     arts: {
       kicker: 'Off the clock',
-      title: 'The parts that are not on a résumé',
+      title: 'Away from the lab',
       paragraphs: [
         'I play flute and piano at RCM Level 10 and spent a summer with the Soho Sound Canadian Junior Honour Band. Music is the one thing I do where the feedback is immediate and nobody asks for a confidence interval.',
         'I write poetry badly and perform it slightly better, which was enough for third at the York Region Poetry Slam. I teach swimming, which has taught me more about explaining things clearly than any course. I speak English and Mandarin at home and French well enough to be polite about it.'
@@ -341,6 +342,23 @@
       title: 'The mailbox at the end of the path',
       body: 'I answer email faster than I answer anything else. Research questions, competition prep, a good paper I should read, or a request to walk someone through Mantis: all fine.',
       note: 'Based in Richmond Hill, Ontario. Usually awake later than I should be.'
+    },
+
+    guide: {
+      kicker: 'Guide',
+      title: 'Where everything is',
+      intro: 'Eight places, one path between them. Walk with the arrow keys, click the grass, or pick a spot on the map in the corner.',
+      places: [
+        { site: 'about', place: 'the cottage', what: 'About me: school, the lab, and what I actually work on.' },
+        { site: 'research', place: 'the observatory', what: 'Research: seven projects, with the numbers behind them.' },
+        { site: 'recognition', place: 'the laurels', what: 'Competitions, medals, and the rest of the shelf.' },
+        { site: 'projects', place: 'the workshop', what: 'Things I built: Mantis, Window to the Mind, Heartware.' },
+        { site: 'arts', place: 'the gramophone', what: 'Away from the lab: music, poetry, teaching swimming.' },
+        { site: 'contact', place: 'the mailbox', what: 'Email and LinkedIn, if you want to reach me.' },
+        { site: 'bench', place: 'the bench', what: 'Somewhere to sit. The thought changes each time.' },
+        { site: 'secret', place: 'the garden gate', what: 'Locked. The password is somewhere on the desk.' }
+      ],
+      reading: 'If you would rather read it straight through, there is a plain version of the whole site.'
     },
 
     journal: {

@@ -9,6 +9,7 @@
   var W = 4200, H = 3000;
 
   var world, camera, groundWrap, decor, sitesWrap, playerEl, nearbyEl;
+  var mini = null, miniCtx = null, miniBase = null, miniT = 0, pathLines = null;
   var groundCanvas, skyCanvas;
   var cam = { x: 0, y: 0 };
   var p = { x: 2100, y: 1720, vx: 0, vy: 0, facing: 1, moving: false, speed: 0 };
@@ -36,6 +37,61 @@
     seed = (seed * 1664525 + 1013904223) % 4294967296;
     return seed / 4294967296;
   }
+  function rr(a, b) { return a + rnd() * (b - a); }
+  function pick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
+
+  /* ---------------------------------------------------------
+     Art
+     --------------------------------------------------------- */
+  var INK = 'rgba(58,44,34,.45)';
+
+  function treeArt(kind, s) {
+    s = s || 1;
+    if (kind === 'oak') {
+      return '<svg viewBox="0 0 280 340" width="' + Math.round(280 * s) + '" height="' + Math.round(340 * s) + '" aria-hidden="true">' +
+        '<ellipse cx="140" cy="330" rx="88" ry="14" fill="#4F6140" opacity=".2"/>' +
+        '<path d="M122 330c3-40 6-72 4-104c8 16 15 34 18 52c5-24 13-44 24-60c-3 38-2 76 0 112Z" fill="#7E5738"/>' +
+        '<path d="M132 328c2-38 4-70 3-100c4 18 6 38 7 56" stroke="#6B4529" stroke-width="6" fill="none" opacity=".55" stroke-linecap="round"/>' +
+        '<g class="tree-sway">' +
+        '<path d="M140 22c34 0 58 18 62 42c26 6 42 28 38 52c18 16 14 42-6 52c2 26-20 44-46 40c-10 22-38 30-60 16c-20 16-48 8-56-14c-24 2-40-18-34-40c-20-14-18-40 2-52c-4-26 16-46 42-46c6-30 30-50 58-50Z" fill="#4F7449"/>' +
+        '<path d="M62 168c-6-18 4-36 22-40c4-22 26-34 44-26c10-18 34-22 48-8c16-8 36 0 40 16c16 4 24 20 18 34c-10 20-34 26-56 20c-14 14-38 16-52 4c-18 12-42 6-50-10c-6 4-10 6-14 10Z" fill="#5E8556"/>' +
+        '<path d="M96 116c6-18 26-28 44-22c8-14 28-16 38-4c14-2 26 8 26 20c-8 16-28 22-46 16c-12 10-32 10-44 0c-8 2-14 0-18-10Z" fill="#7CA36E"/>' +
+        '<path d="M84 80c14-14 36-18 52-8c14-10 34-6 42 8c-12 12-32 16-48 10c-14 10-34 8-46-10Z" fill="#8FB57E" opacity=".7"/>' +
+        '<g fill="#40603E" opacity=".35">' +
+        '<ellipse cx="96" cy="210" rx="34" ry="16"/><ellipse cx="196" cy="216" rx="30" ry="14"/><ellipse cx="150" cy="232" rx="26" ry="10"/>' +
+        '</g>' +
+        '<g fill="#A6C793" opacity=".5">' +
+        '<ellipse cx="108" cy="104" rx="16" ry="9"/><ellipse cx="176" cy="126" rx="12" ry="7"/><ellipse cx="146" cy="86" rx="9" ry="6"/>' +
+        '</g>' +
+        '</g></svg>';
+    }
+    if (kind === 'birch') {
+      return '<svg viewBox="0 0 220 360" width="' + Math.round(220 * s) + '" height="' + Math.round(360 * s) + '" aria-hidden="true">' +
+        '<ellipse cx="110" cy="350" rx="58" ry="11" fill="#4F6140" opacity=".18"/>' +
+        '<path d="M101 352c2-70 3-140 1-210h16c-2 70-1 140 1 210Z" fill="#EBE4D3"/>' +
+        '<path d="M112 352c1-70 2-140 0-210h5c-1 70 0 140 2 210Z" fill="#C9BFA9" opacity=".7"/>' +
+        '<g stroke="#7E7264" stroke-width="3" stroke-linecap="round" opacity=".5">' +
+        '<path d="M104 300h12M103 268h13M105 220h11M104 180h12M106 152h10M103 116h12"/></g>' +
+        '<path d="M108 210c-14-10-22-24-24-38M114 176c12-8 20-20 22-32" stroke="#8C8071" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>' +
+        '<g class="tree-sway">' +
+        '<path d="M46 128c-8-26 8-48 30-52c2-24 24-40 44-34c12-18 38-18 48 0c22-2 38 14 36 34c16 8 18 30 4 40c6 20-10 36-30 34c-8 18-32 24-48 12c-14 12-36 10-44-6c-20 4-36-8-40-28Z" fill="#6F9A66"/>' +
+        '<path d="M64 96c6-18 26-26 42-18c8-12 28-14 38-2c14 0 24 12 22 24c-10 14-30 18-46 10c-12 8-30 6-40-6c-8 2-14-2-16-8Z" fill="#86AE76"/>' +
+        '<path d="M88 68c12-10 30-10 40 0c10-4 22 2 24 12c-10 8-26 8-36 2c-10 6-24 2-28-14Z" fill="#A2C795" opacity=".9"/>' +
+        '<g fill="#5C8455" opacity=".45"><ellipse cx="72" cy="140" rx="24" ry="9"/><ellipse cx="146" cy="146" rx="22" ry="8"/></g>' +
+        '</g></svg>';
+    }
+    return '<svg viewBox="0 0 200 340" width="' + Math.round(200 * s) + '" height="' + Math.round(340 * s) + '" aria-hidden="true">' +
+      '<ellipse cx="100" cy="330" rx="54" ry="11" fill="#40532F" opacity=".22"/>' +
+      '<rect x="94" y="244" width="12" height="86" fill="#6E4B31"/>' +
+      '<g class="tree-sway">' +
+      '<path d="M100 24c10 6 14 14 16 22l30 54c4 8 2 14-6 14h-16l14 34c3 8 0 14-8 14h-14l12 36c2 8-2 14-10 14H82c-8 0-12-6-10-14l12-36H70c-8 0-11-6-8-14l14-34H60c-8 0-10-6-6-14l30-54c2-8 6-16 16-22Z" fill="#3C5C42"/>' +
+      '<path d="M100 46c6 4 9 10 10 16l24 44c3 6 0 10-6 10h-14l10 24c2 6-1 10-7 10h-8l-3-8-3 8h-8c-6 0-9-4-7-10l10-24H84c-6 0-9-4-6-10l24-44c1-6 4-12 10-16Z" fill="#4A6E4E" opacity=".95"/>' +
+      '<path d="M100 16l10 26c-4 6-16 6-20 0Z" fill="#5B8459"/>' +
+      '<g fill="#6E9A66" opacity=".55"><path d="M78 96l10 22H68Z"/><path d="M122 96l10 22h-20Z"/><path d="M70 156l9 20H61Z"/><path d="M130 156l9 20h-18Z"/></g>' +
+      '<g fill="#2F4A36" opacity=".4"><path d="M84 200l16 42H68Z"/><path d="M116 200l16 42h-32Z"/></g>' +
+      '</g></svg>';
+  }
+
   function rr(a, b) { return a + rnd() * (b - a); }
   function pick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
 
@@ -87,13 +143,17 @@
 
   var ART = {
     cottage: '<svg viewBox="0 0 320 300" width="320" height="300" aria-hidden="true">' +
+      '<defs><linearGradient id="ctWall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E3CFB0"/><stop offset=".3" stop-color="#F8EDD9"/><stop offset="1" stop-color="#E8D6BA"/></linearGradient>' +
+      '<linearGradient id="ctRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8F6BA0"/><stop offset="1" stop-color="#66447A"/></linearGradient></defs>' +
       '<ellipse cx="160" cy="288" rx="130" ry="16" fill="#5E7047" opacity=".18"/>' +
       '<rect x="58" y="256" width="204" height="34" rx="6" fill="#C7B79B"/>' +
       '<g stroke="#AC9878" stroke-width="2" opacity=".7"><path d="M58 272h204M108 256v34M162 256v34M216 256v34"/></g>' +
-      '<rect x="66" y="150" width="188" height="112" rx="4" fill="#F4E7D1"/>' +
+      '<rect x="66" y="150" width="188" height="112" rx="4" fill="url(#ctWall)"/>' +
+      '<path d="M66 150h188v16H66Z" fill="#C6A276" opacity=".3"/>' +
       '<path d="M66 150h188v112H66Z" fill="none" stroke="#D9C4A5" stroke-width="3"/>' +
       '<path d="M68 152l-24 12v-10l24-12Zm184 0l24 12v-10l-24-12Z" fill="#E4D3B8"/>' +
-      '<path d="M30 152L160 66l130 86Z" fill="#7E5C8E"/>' +
+      '<path d="M30 152L160 66l130 86Z" fill="url(#ctRoof)"/>' +
+      '<path d="M30 152L160 66l22 14-108 72Z" fill="#A484B4" opacity=".45"/>' +
       '<path d="M46 152L160 78l114 74Z" fill="#8E6A9E"/>' +
       '<g stroke="#6A4B7A" stroke-width="2" opacity=".4"><path d="M78 132l82-54M120 152l82-54M180 152l64-42"/></g>' +
       '<rect x="210" y="86" width="26" height="52" rx="2" fill="#C08A6E"/>' +
@@ -119,6 +179,8 @@
       '</svg>',
 
     observatory: '<svg viewBox="0 0 300 310" width="300" height="310" aria-hidden="true">' +
+      '<defs><linearGradient id="obDome" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#A7C0AD"/><stop offset="1" stop-color="#78947E"/></linearGradient>' +
+      '<linearGradient id="obWall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D8CBB2"/><stop offset=".32" stop-color="#F0E7D4"/><stop offset="1" stop-color="#DDD0B7"/></linearGradient></defs>' +
       '<ellipse cx="150" cy="298" rx="130" ry="18" fill="#5E7047" opacity=".18"/>' +
       '<path d="M14 298c16-46 62-66 136-66s120 20 136 66Z" fill="#93B079"/>' +
       '<path d="M40 298c14-34 52-50 110-50s96 16 110 50Z" fill="#A3BE88" opacity=".7"/>' +
@@ -130,7 +192,8 @@
       '<path d="M150 214v70M116 284h68" stroke="#8E6A9E" stroke-width="4" opacity=".5"/>' +
       '<rect x="142" y="246" width="16" height="38" rx="8" fill="#A98FD4"/>' +
       '<circle cx="150" cy="268" r="3" fill="#F7E3A1"/></g>' +
-      '<g><path d="M92 154a58 46 0 0 1 116 0Z" fill="#8AA695"/>' +
+      '<g><path d="M92 154a58 46 0 0 1 116 0Z" fill="url(#obDome)"/>' +
+      '<path d="M116 154a42 33 0 0 1 34 -32" fill="none" stroke="#B9CDBE" stroke-width="2" opacity=".55"/>' +
       '<path d="M92 154a58 46 0 0 1 116 0" fill="none" stroke="#76937F" stroke-width="3"/>' +
       '<path d="M132 108l10-30h20l-8 30Z" fill="#7E5C8E"/>' +
       '<rect x="144" y="112" width="12" height="44" rx="4" fill="#D9A65B"/>' +
@@ -283,14 +346,22 @@
      Stations
      --------------------------------------------------------- */
   var SITES = [
-    { id: 'about', x: 1650, y: 1520, art: 'cottage', artW: 320, label: 'the cottage', verb: 'Look around the cottage', nudge: 'about' },
-    { id: 'research', x: 2650, y: 1480, art: 'observatory', artW: 300, label: 'the observatory', verb: 'Start reading', nudge: 'research' },
-    { id: 'recognition', x: 3230, y: 2010, art: 'laurels', artW: 300, label: 'the laurels', verb: 'See the shelf', nudge: 'recognition' },
-    { id: 'projects', x: 1020, y: 2350, art: 'workshop', artW: 320, label: 'the workshop', verb: 'See what is on the easel', nudge: 'projects' },
-    { id: 'arts', x: 2330, y: 1440, art: 'gramophone', artW: 240, label: 'the gramophone', verb: 'Listen', nudge: 'arts' },
-    { id: 'contact', x: 1620, y: 2580, art: 'mailbox', artW: 170, label: 'the mailbox', verb: 'Write a letter', nudge: 'contact' },
-    { id: 'bench', x: 2810, y: 2455, art: 'bench', artW: 210, label: 'the bench', verb: 'Sit for a minute', nudge: 'bench' },
-    { id: 'secret', x: 430, y: 820, art: 'gate', artW: 270, label: 'the garden gate', verb: 'Go through', nudge: 'secret', locked: true }
+    { id: 'about', x: 1650, y: 1520, art: 'cottage', artW: 320, label: 'the cottage', verb: 'Look around the cottage', nudge: 'about',
+      blurb: 'Grade 11 at St. Robert IB, and the Kellis Lab at MIT CSAIL.' },
+    { id: 'research', x: 2650, y: 1480, art: 'observatory', artW: 300, label: 'the observatory', verb: 'Start reading', nudge: 'research',
+      blurb: 'Seven projects: certified statistics, a drug engine, an Alzheimer’s pipeline.' },
+    { id: 'recognition', x: 3230, y: 2010, art: 'laurels', artW: 300, label: 'the laurels', verb: 'See the shelf', nudge: 'recognition',
+      blurb: 'DECA, FBLA, HOSA, a CWSF gold medal, and the smaller things.' },
+    { id: 'projects', x: 1020, y: 2350, art: 'workshop', artW: 320, label: 'the workshop', verb: 'See what is on the easel', nudge: 'projects',
+      blurb: 'Mantis, Window to the Mind, Heartware, and this field.' },
+    { id: 'arts', x: 2330, y: 1440, art: 'gramophone', artW: 240, label: 'the gramophone', verb: 'Listen', nudge: 'arts',
+      blurb: 'Flute and piano at RCM 10, a band summer, and poetry.' },
+    { id: 'contact', x: 1620, y: 2580, art: 'mailbox', artW: 170, label: 'the mailbox', verb: 'Write a letter', nudge: 'contact',
+      blurb: 'Email reaches me faster than anything else.' },
+    { id: 'bench', x: 2810, y: 2455, art: 'bench', artW: 210, label: 'the bench', verb: 'Sit for a minute', nudge: 'bench',
+      blurb: 'One thought, changed each time you sit down.' },
+    { id: 'secret', x: 430, y: 820, art: 'gate', artW: 270, label: 'the garden gate', verb: 'Go through', nudge: 'secret', locked: true,
+      blurb: 'Locked, unless you found the password on the desk.' }
   ];
 
   function buildStations() {
@@ -307,7 +378,9 @@
       btn.innerHTML =
         '<span class="site-glow" style="top:' + (s.artW * 0.62) + 'px"></span>' +
         '<span class="site-art">' + ART[s.art] + '</span>' +
-        '<span class="site-label">' + s.label + '</span>';
+        '<span class="site-label">' + s.label + '</span>' +
+        '<span class="site-tip" aria-hidden="true"><span class="site-tip-name">' + s.label + '</span>' +
+        '<span class="site-tip-blurb">' + (s.blurb || s.verb) + '</span></span>';
       if (s.locked && !state.secretUnlocked) btn.classList.add('is-hidden');
       btn.addEventListener('click', function (ev) {
         ev.stopPropagation();
@@ -554,34 +627,64 @@
       g.fill();
     }
 
-    // paths
-    var pathPts = [
-      [[1650, 1580], [1900, 1620], [2100, 1720]],
-      [[2100, 1720], [2220, 1610], [2320, 1500]],
-      [[2100, 1720], [2280, 1650], [2440, 1540], [2580, 1420], [2650, 1360]],
-      [[2100, 1720], [2400, 1800], [2760, 1900], [3060, 1970], [3200, 2000]],
-      [[2100, 1720], [1910, 1880], [1780, 2140], [1700, 2400], [1620, 2560]],
-      [[2100, 1720], [1860, 1900], [1560, 2090], [1250, 2230], [1080, 2310]],
-      [[1650, 1500], [1420, 1380], [1180, 1230], [900, 1060], [620, 880], [470, 800]],
-      [[3200, 2020], [3100, 2180], [2960, 2320], [2840, 2430]],
-      [[2840, 2470], [3010, 2520], [3150, 2540]]
+    // paths: one network, drawn as solid strokes so junctions never double up
+    var HUB = [2100, 1720];
+    var pathPts = pathLines = [
+      [[1650, 1512], [1790, 1592], [1950, 1652], HUB],
+      [HUB, [2260, 1652], [2420, 1566], [2560, 1462], [2650, 1392]],
+      [HUB, [2400, 1798], [2760, 1898], [3060, 1968], [3200, 2002]],
+      [HUB, [1912, 1876], [1782, 2136], [1702, 2396], [1620, 2556]],
+      [HUB, [1862, 1898], [1562, 2088], [1252, 2228], [1084, 2308]],
+      [[1650, 1492], [1420, 1372], [1180, 1222], [900, 1052], [622, 872], [470, 792]],
+      [[3200, 2020], [3100, 2178], [2962, 2318], [2842, 2428]],
+      [[2842, 2472], [3010, 2518], [3150, 2538]],
+      [[2320, 1488], [2322, 1462], [2330, 1452]]
     ];
+
     g.lineCap = 'round';
     g.lineJoin = 'round';
-    pathPts.forEach(function (pts) {
-      smooth(g, pts, 98, 'rgba(110,124,80,.32)');
-      smooth(g, pts, 92, 'rgba(150,132,96,.32)');
-      smooth(g, pts, 82, '#E9DAB8');
-      smooth(g, pts, 64, '#F6E9C9');
+
+    // a clearing where the paths meet, so the hub reads as a place
+    var hubG = g.createRadialGradient(HUB[0], HUB[1], 20, HUB[0], HUB[1], 168);
+    hubG.addColorStop(0, '#F2E4C4');
+    hubG.addColorStop(.72, '#E8D6B2');
+    hubG.addColorStop(1, 'rgba(232,214,178,0)');
+    g.fillStyle = hubG;
+    g.beginPath();
+    g.ellipse(HUB[0], HUB[1], 168, 128, 0, 0, 6.3);
+    g.fill();
+
+    function pathNet() {
+      var path = new Path2D();
+      pathPts.forEach(function (pts) {
+        path.moveTo(pts[0][0], pts[0][1]);
+        for (var i = 1; i < pts.length - 1; i++) {
+          var mx = (pts[i][0] + pts[i + 1][0]) / 2;
+          var my = (pts[i][1] + pts[i + 1][1]) / 2;
+          path.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+        }
+        var n = pts.length - 1;
+        path.quadraticCurveTo(pts[n][0], pts[n][1], pts[n][0], pts[n][1]);
+      });
+      return path;
+    }
+    var net = pathNet();
+    var bands = [[104, '#93A76D'], [92, '#C6AF86'], [78, '#E3D0A9'], [58, '#F4E8C9']];
+    bands.forEach(function (b) {
+      g.strokeStyle = b[1];
+      g.lineWidth = b[0];
+      g.stroke(net);
     });
-    // path speckles
-    for (var s = 0; s < 1800; s++) {
+
+    // path speckles, kept off the hub so the clearing stays clean
+    for (var s2 = 0; s2 < 1500; s2++) {
       var sp = pathPts[Math.floor(rnd() * pathPts.length)];
       var seg = Math.floor(rnd() * (sp.length - 1));
       var f = rnd();
-      var px2 = sp[seg][0] + (sp[seg + 1][0] - sp[seg][0]) * f + rr(-24, 24);
-      var py2 = sp[seg][1] + (sp[seg + 1][1] - sp[seg][1]) * f + rr(-24, 24);
-      g.fillStyle = rnd() > .5 ? 'rgba(168,146,108,.35)' : 'rgba(243,233,212,.4)';
+      var px2 = sp[seg][0] + (sp[seg + 1][0] - sp[seg][0]) * f + rr(-22, 22);
+      var py2 = sp[seg][1] + (sp[seg + 1][1] - sp[seg][1]) * f + rr(-22, 22);
+      if (Math.hypot(px2 - HUB[0], py2 - HUB[1]) < 150) continue;
+      g.fillStyle = rnd() > .5 ? 'rgba(168,146,108,.3)' : 'rgba(243,233,212,.38)';
       g.fillRect(px2, py2, rr(1, 3), rr(1, 3));
     }
 
@@ -945,6 +1048,113 @@
   }
 
   /* ---------------------------------------------------------
+     Minimap
+     --------------------------------------------------------- */
+  function buildMinimap() {
+    mini = document.getElementById('minimap');
+    var canvas = document.getElementById('minimap-canvas');
+    if (!mini || !canvas) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cw = 168, ch = 120;
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    canvas.style.width = cw + 'px';
+    canvas.style.height = ch + 'px';
+    miniCtx = canvas.getContext('2d');
+    miniCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var sx = cw / W, sy = ch / H;
+    miniBase = document.createElement('canvas');
+    miniBase.width = cw * dpr;
+    miniBase.height = ch * dpr;
+    var b = miniBase.getContext('2d');
+    b.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    b.fillStyle = '#A9C47E';
+    b.fillRect(0, 0, cw, ch);
+    var wash = b.createLinearGradient(0, 0, 0, ch);
+    wash.addColorStop(0, 'rgba(255,250,220,.28)');
+    wash.addColorStop(1, 'rgba(70,92,54,.22)');
+    b.fillStyle = wash;
+    b.fillRect(0, 0, cw, ch);
+
+    // paths, thin
+    if (pathLines) {
+      b.strokeStyle = 'rgba(246,233,201,.95)';
+      b.lineWidth = 2.6;
+      b.lineCap = 'round';
+      b.lineJoin = 'round';
+      pathLines.forEach(function (pts) {
+        b.beginPath();
+        b.moveTo(pts[0][0] * sx, pts[0][1] * sy);
+        for (var i = 1; i < pts.length - 1; i++) {
+          var mx = (pts[i][0] + pts[i + 1][0]) / 2;
+          var my = (pts[i][1] + pts[i + 1][1]) / 2;
+          b.quadraticCurveTo(pts[i][0] * sx, pts[i][1] * sy, mx * sx, my * sy);
+        }
+        var n = pts.length - 1;
+        b.quadraticCurveTo(pts[n][0] * sx, pts[n][1] * sy, pts[n][0] * sx, pts[n][1] * sy);
+        b.stroke();
+      });
+    }
+
+    // pond
+    b.fillStyle = 'rgba(140,182,194,.95)';
+    b.beginPath();
+    b.ellipse(3150 * sx, 2520 * sy, 330 * sx, 156 * sy, 0, 0, 6.3);
+    b.fill();
+
+    // landmarks
+    stations.forEach(function (st) {
+      if (st.id === 'secret' && !state.secretUnlocked) return;
+      b.beginPath();
+      b.arc(st.x * sx, st.y * sy, 2.6, 0, 6.3);
+      b.fillStyle = '#6B4B8A';
+      b.fill();
+      b.lineWidth = 1.4;
+      b.strokeStyle = 'rgba(251,245,233,.95)';
+      b.stroke();
+    });
+
+    mini.addEventListener('click', function (ev) {
+      var r = canvas.getBoundingClientRect();
+      var wx = ((ev.clientX - r.left) / r.width) * W;
+      var wy = ((ev.clientY - r.top) / r.height) * H;
+      var hit = null;
+      stations.forEach(function (st) {
+        if (st.id === 'secret' && !state.secretUnlocked) return;
+        if (Math.hypot(st.x - wx, st.y - wy) < 150) hit = st;
+      });
+      if (hit) goToStation(hit);
+      else walkTo(wx, wy);
+    });
+  }
+
+  function drawMinimap(now) {
+    if (!miniCtx || !miniBase) return;
+    if (now - miniT < 90) return;
+    miniT = now;
+    var cw = 168, ch = 120;
+    var sx = cw / W, sy = ch / H;
+    miniCtx.clearRect(0, 0, cw, ch);
+    miniCtx.drawImage(miniBase, 0, 0, cw, ch);
+
+    // where you are looking
+    miniCtx.strokeStyle = 'rgba(255,255,255,.75)';
+    miniCtx.lineWidth = 1;
+    miniCtx.strokeRect(cam.x * sx, cam.y * sy, vw * sx, vh * sy);
+
+    // you
+    miniCtx.beginPath();
+    miniCtx.arc(p.x * sx, p.y * sy, 3.1, 0, 6.3);
+    miniCtx.fillStyle = '#FBF5E9';
+    miniCtx.fill();
+    miniCtx.lineWidth = 1.8;
+    miniCtx.strokeStyle = '#3F2E52';
+    miniCtx.stroke();
+  }
+
+  /* ---------------------------------------------------------
      Effects
      --------------------------------------------------------- */
   function puff(x, y, n, color) {
@@ -1022,6 +1232,7 @@
     updateCamera(dt);
     updateNear();
     updateFx(dt);
+    drawMinimap(now);
     requestAnimationFrame(loop);
   }
 
@@ -1041,6 +1252,7 @@
         return;
       }
       if (k === 'j' && AW.Panels) { AW.Panels.open('journal'); return; }
+      if (k === 'g' && AW.Panels) { AW.Panels.open('guide'); return; }
       if (k === 'm' && AW.Audio) { AW.Audio.toggleMusic(); return; }
       keys[k] = true;
       if (k.indexOf('arrow') === 0) keys[k] = true;
@@ -1053,7 +1265,7 @@
     // click-to-walk
     world.addEventListener('pointerdown', function (e) {
       if (!entered) return;
-      if (e.target.closest('.world-hud, .touch-stick, .site, .panel-layer, .crane')) return;
+      if (e.target.closest('.world-hud, .touch-stick, .site, .panel-layer, .crane, .minimap')) return;
       if (AW.state.panelOpen || e.button === 2) return;
       var rect = world.getBoundingClientRect();
       var sx = e.clientX - rect.left, sy = e.clientY - rect.top;
@@ -1138,6 +1350,10 @@
     },
     openSite: openSite,
     goToStation: goToStation,
+    goToSite: function (id) {
+      var st = stations.filter(function (s) { return s.id === id; })[0];
+      if (st) goToStation(st);
+    },
     hasEntered: function () { return entered; },
     show: function () {
       if (!world) return;
@@ -1199,6 +1415,7 @@
       var g = stations.filter(function (s) { return s.id === 'secret'; })[0];
       if (g) g.el.classList.remove('is-hidden');
     }
+    buildMinimap();
     // initial camera
     vw = window.innerWidth; vh = window.innerHeight;
     cam.x = Math.max(0, Math.min(W - vw, p.x - vw / 2));

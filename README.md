@@ -2,7 +2,7 @@
 
 Personal site. Two ways to read it:
 
-- **The field** — a hand-drawn room, a walkable meadow, and field notes.
+- **The field** — a hand-drawn room, a walkable meadow, field notes, a map, and a guide on first arrival.
 - **Reading view** — the same content as a plain, static portfolio. Reachable from the settings panel, the button in the static header, or `?view=static`.
 
 No build step, no framework, no bundler. Open `index.html` through a local server, or push to GitHub Pages.
@@ -52,9 +52,10 @@ Stored under `awang.field.v1` in `localStorage`: sound, music, volume, reading v
 
 ## Keyboard
 
-- Arrow keys or WASD to walk.
+- Arrow keys or WASD to walk. Hover a landmark to see what it is before you walk there; the map in the corner jumps you anywhere.
+- Click the minimap, or walk with the on-screen stick on touch.
 - `E` to open whatever is close.
-- `J` for the journal.
+- `J` for the journal, `G` for the guide.
 - `M` to mute music.
 - `Esc` to close a panel or settings.
 - `Tab` moves through buttons; panels trap focus.
@@ -65,7 +66,7 @@ The two scripts I use live outside the repo, but the invariants they cover are w
 
 ## Things that are hidden on purpose
 
-A gate behind the cottage, seven paper cranes, an old sundial, a bird with opinions. Look around.
+A gate behind the cottage, seven paper cranes, an old sundial, a bird with opinions, and six things on the bench that change every time you sit down. Look around.
 
 ## Deployment
 

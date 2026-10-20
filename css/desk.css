@@ -427,3 +427,70 @@ body:not(.is-loading) .stage { transition: opacity 1.2s ease, transform 1.4s var
   .stage.zooming { transform: none; filter: brightness(1.2); }
   .beams, .bird-body, .bird-tail, #bird-eye, .bulbs circle, .cat, .steam path { animation: none !important; }
 }
+
+/* --- life in the room -------------------------------------- */
+
+/* plants lean the way the light pulls them */
+.sway {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sway 7.5s ease-in-out infinite;
+}
+.sway-b { animation-duration: 9.2s; animation-delay: -1.4s; }
+.sway-c { animation-duration: 6.4s; animation-delay: -.8s; }
+.sway-hang {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: swayHang 10.5s ease-in-out infinite;
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-.9deg) translateY(0); }
+  35% { transform: rotate(.6deg) translateY(-1px); }
+  70% { transform: rotate(1.1deg) translateY(0); }
+}
+@keyframes swayHang {
+  0%, 100% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.4deg); }
+}
+
+/* curtain hems breathe */
+.curtain {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: curtainSway 12s ease-in-out infinite;
+}
+.curtain-r { animation-duration: 13.5s; animation-delay: -3s; }
+@keyframes curtainSway {
+  0%, 100% { transform: rotate(0deg) scaleX(1); }
+  50% { transform: rotate(.35deg) scaleX(1.006); }
+}
+
+/* dust hanging in the light */
+.motes circle {
+  transform-box: fill-box;
+  animation: moteFloat 11s ease-in-out infinite;
+}
+.motes circle:nth-child(2n) { animation-duration: 14s; animation-delay: -2.5s; }
+.motes circle:nth-child(3n) { animation-duration: 8.5s; animation-delay: -5s; }
+.motes circle:nth-child(5n) { animation-duration: 16s; animation-delay: -7.5s; }
+@keyframes moteFloat {
+  0%, 100% { transform: translate(0, 0); opacity: .25; }
+  40% { opacity: .6; }
+  50% { transform: translate(6px, -26px); opacity: .5; }
+  80% { opacity: .2; }
+}
+
+/* the bird looks around */
+.bird-head {
+  transform-box: fill-box;
+  transform-origin: 26% 68%;
+  animation: headLook 7.4s ease-in-out infinite;
+}
+@keyframes headLook {
+  0%, 100% { transform: rotate(0deg); }
+  18% { transform: rotate(-5deg); }
+  32% { transform: rotate(-5deg); }
+  46% { transform: rotate(3deg); }
+  62% { transform: rotate(3deg); }
+  74% { transform: rotate(0deg); }
+}

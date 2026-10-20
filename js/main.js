@@ -144,7 +144,51 @@
     btn.setAttribute('aria-label', state.musicOn ? 'Mute music' : 'Unmute music');
   }
 
+  function hideCoach() {
+    var c = document.getElementById('coach');
+    if (!c || c.hidden) return;
+    c.classList.remove('on');
+    document.getElementById('minimap').classList.remove('is-hinting');
+    setTimeout(function () { c.hidden = true; }, 320);
+  }
+
+  function showCoach() {
+    var c = document.getElementById('coach');
+    if (!c) return;
+    c.hidden = false;
+    requestAnimationFrame(function () { c.classList.add('on'); });
+    var map = document.getElementById('minimap');
+    if (map) map.classList.add('is-hinting');
+    clearTimeout(showCoach._t);
+    showCoach._t = setTimeout(hideCoach, 11000);
+  }
+
+  function wireCoach() {
+    var c = document.getElementById('coach');
+    if (!c) return;
+    c.addEventListener('click', function (e) {
+      var go = e.target.closest('[data-coach-site]');
+      var read = e.target.closest('[data-coach-reading]');
+      var guide = e.target.closest('[data-coach-guide]');
+      if (guide) { hideCoach(); AW.Panels.open('guide'); return; }
+      if (read) { hideCoach(); AW.setMode('static'); return; }
+      if (go) { hideCoach(); AW.World.goToSite(go.getAttribute('data-coach-site')); return; }
+      if (e.target.closest('[data-coach-close]')) hideCoach();
+    });
+  }
+
   function wireHud() {
+    // the guide opens once on the first visit, then lives in the HUD
+    if (AW.Panels) {
+      AW.Panels.onClose = function (id) {
+        if (id === 'about' && !state.seenGuide) {
+          state.seenGuide = true;
+          AW.save();
+          setTimeout(showCoach, 320);
+        }
+      };
+    }
+
     // the skip link is the keyboard shortcut through the intro
     var skip = document.querySelector('.skip-link');
     if (skip) skip.addEventListener('click', function (e) {
@@ -165,6 +209,11 @@
     if (audioBtn) audioBtn.addEventListener('click', function () {
       if (AW.Audio) AW.Audio.toggleMusic();
       syncAudioButton();
+    });
+
+    var guideBtn = document.getElementById('btn-guide');
+    if (guideBtn) guideBtn.addEventListener('click', function () {
+      if (AW.Panels) AW.Panels.open('guide');
     });
 
     var journalBtn = document.getElementById('btn-journal');
@@ -191,6 +240,7 @@
     document.body.classList.remove('is-loading');
     initCursor();
     wireHud();
+    wireCoach();
     syncAudioButton();
     if (AW.Panels) AW.Panels.updateCranes();
     if (state.staticMode) {

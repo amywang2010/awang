@@ -41,9 +41,7 @@
 .panel-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(35, 28, 22, .38);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(35, 28, 22, .46);
   opacity: 0;
   transition: opacity .35s ease;
 }
@@ -587,4 +585,38 @@ html.calm .tree-sway { animation: none !important; }
 @media (max-width: 520px) {
   .panel-photo { float: none; width: 100%; max-width: 220px; margin: 0 0 16px; }
   .project-photo { max-width: 100%; }
+}
+
+/* --- guide ------------------------------------------------- */
+.guide-list {
+  margin: 18px 0 6px;
+  border-top: 1px solid rgba(120, 100, 70, .16);
+}
+.guide-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 18px;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 6px;
+  border: 0;
+  border-bottom: 1px solid rgba(120, 100, 70, .16);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background .18s ease, padding-left .18s ease;
+}
+.guide-row:hover { background: rgba(169, 143, 212, .09); padding-left: 12px; }
+.guide-place {
+  font-family: var(--font-display);
+  font-size: .98rem;
+  color: var(--ink);
+}
+.guide-what { font-size: .86rem; line-height: 1.5; color: var(--ink-soft); }
+.guide-arrow { color: var(--plum); opacity: .55; transition: transform .18s ease, opacity .18s ease; }
+.guide-row:hover .guide-arrow { opacity: 1; transform: translateX(3px); }
+@media (max-width: 520px) {
+  .guide-row { grid-template-columns: 1fr 16px; gap: 4px 10px; }
+  .guide-what { grid-column: 1 / -1; }
+  .guide-arrow { grid-row: 1; grid-column: 2; }
 }

@@ -150,12 +150,12 @@
 
     bench: function () {
       var thoughts = [
-        'Most of the work is deciding which number to trust. The rest is deciding whether to trust the person who produced it, including yourself.',
-        'The best part of any conference is the hallway. The talks are where you find out what people already finished.',
-        'I keep a folder called “read later”. It is 94 papers deep. This is fine.',
-        'A result that survives a bad segmentation is worth ten that survive a good one.',
-        'The purple bird is called Marmalade. She has opinions about my sleep schedule.',
-        'Every project looks stupid for about three weeks. Then it looks obvious. Then it is published by someone else.'
+        'Every measurement is a story about what the instrument could not see. Most arguments in biology are really arguments about instruments.',
+        'Memory looks like compression with loss, and personality looks like whatever survived the compression.',
+        'A p-value answers a question nobody asked. What you want to know is how likely it is that you are wrong.',
+        'Bach used the same four-chord loop for forty years and never ran out. I think about that when I worry about repeating myself.',
+        'Cells in a tumour cooperate until they stop. Plenty of institutions follow the same curve.',
+        'Phase separation looks like nothing happening, and then it is a droplet. Most transitions worth studying look like that.'
       ];
       var line = thoughts[Math.floor(Math.random() * thoughts.length)];
       return {
@@ -164,6 +164,28 @@
         body: '<p style="font-family:var(--font-display);font-size:1.25rem;line-height:1.5;color:var(--ink)">' + line + '</p>' +
           notes('The pond does most of the entertaining here.'),
         foot: ''
+      };
+    },
+
+    guide: function () {
+      var G = C.guide;
+      return {
+        kicker: G.kicker,
+        title: G.title,
+        body: '<p>' + G.intro + '</p>' +
+          '<div class="guide-list">' +
+          G.places.map(function (pl) {
+            return '<button class="guide-row" type="button" data-walkto="' + pl.site + '">' +
+              '<span class="guide-place">' + esc(pl.place) + '</span>' +
+              '<span class="guide-what">' + esc(pl.what) + '</span>' +
+              '<span class="guide-arrow" aria-hidden="true">→</span>' +
+              '</button>';
+          }).join('') + '</div>' +
+          '<p class="panel-note">' + G.reading + '</p>',
+        foot: '<div class="contact-actions">' +
+          '<button class="btn-ink" type="button" data-reading="1">Open the reading version</button>' +
+          '<button class="btn-outline" type="button" data-close-panel="1">Back to the field</button>' +
+          '</div>'
       };
     },
 
@@ -235,9 +257,11 @@
 
   function close() {
     if (layer.hidden) return;
+    var closedId = current;
     layer.classList.remove('is-open');
     AW.state.panelOpen = false;
     current = null;
+    if (AW.Panels && AW.Panels.onClose) AW.Panels.onClose(closedId);
     document.title = 'Amy Wang';
     setTimeout(function () {
       layer.hidden = true;
@@ -271,7 +295,21 @@
       var o = e.target.closest('[data-open]');
       if (o) {
         open(o.getAttribute('data-open'));
+        return;
       }
+      var walk = e.target.closest('[data-walkto]');
+      if (walk) {
+        var siteId = walk.getAttribute('data-walkto');
+        close();
+        if (AW.World && AW.World.goToSite) AW.World.goToSite(siteId);
+        return;
+      }
+      if (e.target.closest('[data-reading]')) {
+        close();
+        if (AW.setMode) AW.setMode('static');
+        return;
+      }
+      if (e.target.closest('[data-close-panel]')) close();
     });
 
     document.addEventListener('keydown', function (e) {

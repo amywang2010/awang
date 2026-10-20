@@ -36,7 +36,7 @@
       var night = !AW.World.isNight();
       AW.World.setNight(night);
       if (AW.Audio) AW.Audio.softChime();
-      AW.toast(night ? 'The field at night. Mind the fireflies.' : 'Morning again.');
+      AW.toast(night ? 'The field at night.' : 'Morning.');
     });
     sun.setAttribute('role', 'button');
     sun.setAttribute('tabindex', '0');
@@ -59,7 +59,7 @@
         state.konami = true;
         AW.save();
         bloom();
-        AW.toast('Marmalade did a loop. That is all you get.');
+        AW.toast('Marmalade flew a loop around the field.');
       }
     } else {
       pos = k === seq[0] ? 1 : 0;
@@ -76,7 +76,7 @@
       typed = '';
       if (AW.World && AW.World.hasEntered() && !AW.state.panelOpen) {
         if (AW.Audio) AW.Audio.chirp();
-        AW.toast('Somewhere above you, a purple bird says your name back.');
+        AW.toast('Marmalade answers from somewhere above you.');
         if (AW.Eggs.bloom) bloom();
       }
     }

@@ -3,7 +3,7 @@
 Personal site. Two ways to read it:
 
 - **The field** — a hand-drawn room, a walkable meadow, field notes, a map, and a guide on first arrival.
-- **Reading view** — the same content as a plain, static portfolio. Reachable from the settings panel, the button in the static header, or `?view=static`.
+- **Professional resume** — the same content laid out as a conventional page. Reachable from the settings panel, the guide, or `?view=static`.
 
 No build step, no framework, no bundler. Open `index.html` through a local server, or push to GitHub Pages.
 
@@ -24,7 +24,7 @@ css/base.css        tokens, reset, cursor, shared controls
 css/desk.css        the room, boot screen, bird, warp transition
 css/world.css       field, ground, landmarks, player, HUD, touch controls
 css/ui.css          field-note panels, settings, bubbles, cranes
-css/static.css      reading view
+css/static.css      professional resume
 js/state.js         saved state, toasts, speech bubbles
 js/content.js       all written content: bio, research, awards, work, projects
 js/audio.js         synthesised music and sound effects (Web Audio)
@@ -32,7 +32,7 @@ js/character.js     the walker, built from SVG parts and animated in JS
 js/desk.js          boot sequence, password, bird, way into the field
 js/world.js         world geometry, ground painting, movement, camera
 js/panels.js        field-note renderers and focus handling
-js/static.js        reading view renderers
+js/static.js        professional resume renderers
 js/eggs.js          paper cranes helpers, konami, the bird's name, console note
 js/settings.js      settings panel
 js/main.js          cursor trail, mode switching, HUD wiring
@@ -41,14 +41,14 @@ assets/             three photographs, compressed to WebP
 
 ## Editing
 
-- **Words**: `js/content.js`. Both the field notes and the reading view read from it.
+- **Words**: `js/content.js`. Both the field notes and the resume read from it.
 - **Landmark positions**: the `SITES` array at the top of `js/world.js`. Positions are feet-anchored world coordinates in a 4200 × 3000 field.
 - **Paths and ground**: `paintGround()` in `js/world.js`.
 - **Colours and type**: the `:root` block in `css/base.css`.
 
 ## Saved state
 
-Stored under `awang.field.v1` in `localStorage`: sound, music, volume, reading view, reduced motion, collected cranes, the unlocked garden, and the time of day. The reset row in settings clears the field-specific parts.
+Stored under `awang.field.v1` in `localStorage`: sound, music, volume, resume view, reduced motion, collected cranes, the unlocked garden, and the time of day. The reset row in settings clears the field-specific parts.
 
 ## Keyboard
 
@@ -62,7 +62,7 @@ Stored under `awang.field.v1` in `localStorage`: sound, music, volume, reading v
 
 ## Checks
 
-The two scripts I use live outside the repo, but the invariants they cover are worth keeping in mind when editing: every landmark is hit-testable at its centre, every panel fits the viewport without horizontal scroll, all body text holds a 4.5:1 contrast ratio, the reading view stays free of overflow, and the field holds 60fps while walking.
+The two scripts I use live outside the repo, but the invariants they cover are worth keeping in mind when editing: every landmark is hit-testable at its centre, every panel fits the viewport without horizontal scroll, all body text holds a 4.5:1 contrast ratio, the resume stays free of overflow, and the field holds 60fps while walking.
 
 ## Things that are hidden on purpose
 

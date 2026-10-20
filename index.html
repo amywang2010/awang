@@ -95,6 +95,9 @@
         <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="22"/>
         </filter>
+        <radialGradient id="birdGlow" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#C9A9F2" stop-opacity=".55"/><stop offset="1" stop-color="#C9A9F2" stop-opacity="0"/>
+        </radialGradient>
         <filter id="grain">
           <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
           <feColorMatrix type="saturate" values="0"/>
@@ -185,16 +188,16 @@
           <path d="M-17 0h34l-5 -30h-24Z" fill="#E3D3BC"/>
           <path d="M-17 0h34l-2 -8h-30Z" fill="#CFBDA1"/>
           <path d="M-14 -30h28l-2 -5h-24Z" fill="#8C7B63"/>
-          <g stroke="#5F8A63" stroke-width="2.4" fill="none" stroke-linecap="round">
-            <path d="M-6 -35c-10 -16 -12 -30 -6 -44"/>
-            <path d="M2 -35c4 -18 12 -30 20 -38"/>
-            <path d="M0 -35c-2 -20 0 -34 4 -48"/>
-          </g>
-          <g fill="#8FB56C">
-            <ellipse cx="-12" cy="-24" rx="9" ry="4.5" transform="rotate(-28 -12 -24)"/>
-            <ellipse cx="12" cy="-22" rx="9" ry="4.5" transform="rotate(24 12 -22)"/>
-          </g>
-          <g class="sway sway-c">
+          <g class="plant sway sway-c">
+            <g stroke="#5F8A63" stroke-width="2.4" fill="none" stroke-linecap="round">
+              <path d="M-6 -35c-10 -16 -12 -30 -6 -44"/>
+              <path d="M2 -35c4 -18 12 -30 20 -38"/>
+              <path d="M0 -35c-2 -20 0 -34 4 -48"/>
+            </g>
+            <g class="leaves" fill="#8FB56C">
+              <ellipse cx="-12" cy="-24" rx="9" ry="4.5" transform="rotate(-28 -12 -24)"/>
+              <ellipse cx="12" cy="-22" rx="9" ry="4.5" transform="rotate(24 12 -22)"/>
+            </g>
             <g transform="translate(-12 -80)">
               <ellipse rx="6" ry="9" fill="#B9A2E0"/><ellipse rx="6" ry="9" transform="rotate(72)" fill="#C8B6E6"/>
               <ellipse rx="6" ry="9" transform="rotate(144)" fill="#B9A2E0"/><ellipse rx="6" ry="9" transform="rotate(216)" fill="#C8B6E6"/>
@@ -290,19 +293,21 @@
         <path d="M22 0v24" stroke="#B08A5E" stroke-width="3"/>
         <path d="M2 24h40l-6 34H8Z" fill="#D9A26F"/>
         <path d="M2 24h40l-2 8H4Z" fill="#C58C57"/>
-        <g stroke="#6E9770" stroke-width="3" fill="none" stroke-linecap="round">
-          <path d="M16 58C4 92 -2 126 6 158"/>
-          <path d="M34 58C48 88 52 122 44 150"/>
-          <path d="M24 58C24 92 20 110 24 136"/>
-        </g>
-        <g class="sway-hang" fill="#7FAA7C">
-          <ellipse cx="6" cy="96" rx="9" ry="6" transform="rotate(-24 6 96)"/>
-          <ellipse cx="-1" cy="124" rx="9" ry="6" transform="rotate(-16 -1 124)"/>
-          <ellipse cx="6" cy="150" rx="8" ry="6" transform="rotate(10 6 150)"/>
-          <ellipse cx="46" cy="92" rx="9" ry="6" transform="rotate(24 46 92)"/>
-          <ellipse cx="50" cy="120" rx="9" ry="6" transform="rotate(14 50 120)"/>
-          <ellipse cx="44" cy="144" rx="8" ry="6" transform="rotate(-10 44 144)"/>
-          <ellipse cx="22" cy="112" rx="9" ry="6" transform="rotate(-6 22 112)"/>
+        <g class="sway-hang">
+          <g stroke="#6E9770" stroke-width="3" fill="none" stroke-linecap="round">
+            <path d="M16 58C4 92 -2 126 6 158"/>
+            <path d="M34 58C48 88 52 122 44 150"/>
+            <path d="M24 58C24 92 20 110 24 136"/>
+          </g>
+          <g class="leaves" fill="#7FAA7C">
+            <ellipse cx="6" cy="96" rx="9" ry="6" transform="rotate(-24 6 96)"/>
+            <ellipse cx="-1" cy="124" rx="9" ry="6" transform="rotate(-16 -1 124)"/>
+            <ellipse cx="6" cy="150" rx="8" ry="6" transform="rotate(10 6 150)"/>
+            <ellipse cx="46" cy="92" rx="9" ry="6" transform="rotate(24 46 92)"/>
+            <ellipse cx="50" cy="120" rx="9" ry="6" transform="rotate(14 50 120)"/>
+            <ellipse cx="44" cy="144" rx="8" ry="6" transform="rotate(-10 44 144)"/>
+            <ellipse cx="22" cy="112" rx="9" ry="6" transform="rotate(-6 22 112)"/>
+          </g>
         </g>
       </g>
 
@@ -482,17 +487,19 @@
           <ellipse cx="0" cy="62" rx="40" ry="9" fill="#8F5E3B" opacity=".14"/>
           <path d="M-26 24h52l-7 34a8 8 0 0 1 -8 6h-22a8 8 0 0 1 -8 -6Z" fill="#D9A26F"/>
           <path d="M-26 24h52l-2 9h-48Z" fill="#C58C57"/>
-          <g stroke="#4F6B52" stroke-width="3" fill="none" stroke-linecap="round">
-            <path d="M-4 24C-8 -4 -22 -18 -34 -30"/>
-            <path d="M2 24C6 -8 20 -20 30 -34"/>
-            <path d="M0 24C0 -6 2 -26 0 -52"/>
-          </g>
-          <g class="sway sway-b" fill="#7FA57B">
-            <path d="M-34 -30C-52 -36 -62 -54 -52 -64C-38 -60 -32 -44 -34 -30Z"/>
-            <path d="M-52 -64C-56 -74 -48 -82 -42 -78C-42 -70 -46 -66 -52 -64Z" opacity=".85"/>
-            <path d="M30 -34C48 -38 60 -54 52 -66C38 -62 30 -48 30 -34Z"/>
-            <path d="M0 -52C-12 -64 -10 -82 2 -88C8 -76 6 -60 0 -52Z"/>
-            <path d="M0 -52C12 -60 22 -56 24 -48C16 -42 6 -44 0 -52Z" opacity=".8"/>
+          <g class="plant sway sway-b">
+            <g stroke="#4F6B52" stroke-width="3" fill="none" stroke-linecap="round">
+              <path d="M-4 24C-8 -4 -22 -18 -34 -30"/>
+              <path d="M2 24C6 -8 20 -20 30 -34"/>
+              <path d="M0 24C0 -6 2 -26 0 -52"/>
+            </g>
+            <g class="leaves" fill="#7FA57B">
+              <path d="M-34 -30C-52 -36 -62 -54 -52 -64C-38 -60 -32 -44 -34 -30Z"/>
+              <path d="M-52 -64C-56 -74 -48 -82 -42 -78C-42 -70 -46 -66 -52 -64Z" opacity=".85"/>
+              <path d="M30 -34C48 -38 60 -54 52 -66C38 -62 30 -48 30 -34Z"/>
+              <path d="M0 -52C-12 -64 -10 -82 2 -88C8 -76 6 -60 0 -52Z"/>
+              <path d="M0 -52C12 -60 22 -56 24 -48C16 -42 6 -44 0 -52Z" opacity=".8"/>
+            </g>
           </g>
         </g>
       </g>
@@ -521,12 +528,14 @@
         <path d="M880 468h10" stroke="#B7AB92" stroke-width="4" stroke-linecap="round"/>
         <path d="M880 478h10" stroke="#B7AB92" stroke-width="4" stroke-linecap="round"/>
         <g class="monitor-led" id="monitor-led"><circle cx="880" cy="492" r="4" fill="#D9A65B"/></g>
-        <!-- sticky note -->
-        <g transform="translate(672 492) rotate(-5)" id="sticky">
-          <rect x="0" y="0" width="46" height="46" fill="#F7DE95"/>
-          <rect x="0" y="0" width="46" height="8" fill="#F2D379"/>
-          <g stroke="#9C7A3F" stroke-width="1.6" stroke-linecap="round">
-            <path d="M7 18h32M7 25h28M7 32h20"/>
+        <!-- sticky note, tucked onto the bezel under the screen -->
+        <g transform="translate(679 490)">
+          <g id="sticky">
+            <rect x="0" y="0" width="38" height="32" rx="1.5" fill="#F7DE95"/>
+            <rect x="0" y="0" width="38" height="6" rx="1.5" fill="#F2D379"/>
+            <g stroke="#9C7A3F" stroke-width="1.3" stroke-linecap="round">
+              <path d="M6 14h26M6 20h20M6 26h14"/>
+            </g>
           </g>
         </g>
         <!-- tiny heart drawn on bezel -->
@@ -534,53 +543,60 @@
       </g>
 
       <!-- purple bird -->
-      <g id="bird" class="bird" transform="translate(684 176)" role="button" tabindex="0" aria-label="Purple bird. Click to say hello.">
-        <rect x="-62" y="-24" width="110" height="118" fill="transparent" pointer-events="all"/>
-        <ellipse cx="-4" cy="86" rx="22" ry="4.5" fill="#8F5E3B" opacity=".13"/>
+      <g id="bird" class="bird" transform="translate(684 176)" role="button" tabindex="0" aria-label="Marmalade, the purple bird. Click to say hello.">
+        <ellipse class="bird-shadow" cx="-4" cy="86" rx="22" ry="4.5" fill="#8F5E3B" opacity=".13"/>
 
-        <!-- tail: two long, tapered feathers -->
-        <g class="bird-tail">
-          <path d="M-18 42C-34 44 -50 54 -60 68C-54 70 -46 69 -40 65C-32 59 -24 52 -16 48Z" fill="#6F4FA8"/>
-          <path d="M-14 46C-28 50 -40 62 -46 74C-38 74 -30 70 -24 64C-19 58 -15 52 -12 49Z" fill="#7E5CB6"/>
-        </g>
+        <g class="bird-hop">
+          <rect x="-62" y="-24" width="110" height="118" fill="transparent" pointer-events="all"/>
+          <ellipse class="bird-halo" cx="2" cy="30" rx="54" ry="60" fill="url(#birdGlow)" opacity="0"/>
 
-        <!-- legs -->
-        <g class="bird-feet" stroke="#D99C48" stroke-width="2.4" stroke-linecap="round" fill="none">
-          <path d="M-2 58v26M-2 84l-5 2M-2 84l5 2"/>
-          <path d="M12 58v26M12 84l-5 2M12 84l5 2"/>
-        </g>
+          <!-- tail: two long, tapered feathers -->
+          <g class="bird-tail">
+            <path d="M-18 42C-34 44 -50 54 -60 68C-54 70 -46 69 -40 65C-32 59 -24 52 -16 48Z" fill="#6F4FA8"/>
+            <path d="M-14 46C-28 50 -40 62 -46 74C-38 74 -30 70 -24 64C-19 58 -15 52 -12 49Z" fill="#7E5CB6"/>
+          </g>
 
-        <!-- body: a slim teardrop, chest forward -->
-        <g class="bird-body">
-          <path d="M19 20C24 30 20 44 8 52C-4 60 -18 56 -21 44C-24 32 -16 22 -5 19C3 17 14 16 19 20Z" fill="#8E6BC4"/>
-          <path d="M16 24C20 32 16 43 6 49C-3 54 -13 51 -15 43C-17 34 -11 27 -2 24C5 22 13 21 16 24Z" fill="#A98FD4" opacity=".45"/>
+          <!-- legs -->
+          <g class="bird-feet" stroke="#D99C48" stroke-width="2.4" stroke-linecap="round" fill="none">
+            <path d="M-2 58v26M-2 84l-5 2M-2 84l5 2"/>
+            <path d="M12 58v26M12 84l-5 2M12 84l5 2"/>
+          </g>
+
+          <!-- body: a slim teardrop, chest forward -->
+          <g class="bird-body">
+            <path d="M19 20C24 30 20 44 8 52C-4 60 -18 56 -21 44C-24 32 -16 22 -5 19C3 17 14 16 19 20Z" fill="#8E6BC4"/>
+            <path d="M16 24C20 32 16 43 6 49C-3 54 -13 51 -15 43C-17 34 -11 27 -2 24C5 22 13 21 16 24Z" fill="#A98FD4" opacity=".45"/>
+          </g>
+
           <!-- folded wing, three primaries -->
-          <path d="M9 22C1 24 -8 31 -11 40C-13 47 -8 51 -2 49C5 46 11 36 12 28Z" fill="#6F4FA8"/>
-          <g stroke="#5A3D8E" stroke-width="1.1" fill="none" opacity=".5" stroke-linecap="round">
-            <path d="M2 26C-2 31 -5 38 -5 44M7 27C4 32 2 38 3 45M12 29C11 34 10 40 11 45"/>
+          <g class="bird-wing">
+            <path d="M9 22C1 24 -8 31 -11 40C-13 47 -8 51 -2 49C5 46 11 36 12 28Z" fill="#6F4FA8"/>
+            <g stroke="#5A3D8E" stroke-width="1.1" fill="none" opacity=".5" stroke-linecap="round">
+              <path d="M2 26C-2 31 -5 38 -5 44M7 27C4 32 2 38 3 45M12 29C11 34 10 40 11 45"/>
+            </g>
           </g>
-        </g>
 
-        <!-- head and neck -->
-        <g class="bird-head">
-          <path d="M14 8C12 14 10 20 8 25C14 22 20 18 22 12Z" fill="#8E6BC4"/>
-          <path d="M20 2C21 -8 26 -14 32 -15C30 -7 27 -1 25 4Z" fill="#6F4FA8"/>
-          <path d="M25 3C27 -4 32 -9 37 -9C34 -3 31 2 29 7Z" fill="#8E6BC4" opacity=".9"/>
-          <circle cx="15" cy="4" r="11.5" fill="#8E6BC4"/>
-          <path d="M7 8C8 13 12 16 17 16C13 18 8 17 6 13Z" fill="#B49BE0" opacity=".5"/>
-          <g id="bird-eye">
-            <circle cx="19" cy="1.5" r="2.5" fill="#241C31"/>
-            <circle cx="19.9" cy=".7" r=".9" fill="#FFFFFF"/>
+          <!-- head and neck -->
+          <g class="bird-head">
+            <path d="M14 8C12 14 10 20 8 25C14 22 20 18 22 12Z" fill="#8E6BC4"/>
+            <path d="M20 2C21 -8 26 -14 32 -15C30 -7 27 -1 25 4Z" fill="#6F4FA8"/>
+            <path d="M25 3C27 -4 32 -9 37 -9C34 -3 31 2 29 7Z" fill="#8E6BC4" opacity=".9"/>
+            <circle cx="15" cy="4" r="11.5" fill="#8E6BC4"/>
+            <path d="M7 8C8 13 12 16 17 16C13 18 8 17 6 13Z" fill="#B49BE0" opacity=".5"/>
+            <g id="bird-eye">
+              <circle class="bird-pupil" cx="19" cy="1.5" r="2.5" fill="#241C31"/>
+              <circle class="bird-glint" cx="19.9" cy=".7" r=".9" fill="#FFFFFF"/>
+            </g>
+            <g class="bird-beak">
+              <path d="M25 2L37 4.6L25 7.4Z" fill="#F0B95A"/>
+              <path d="M25 4.7L37 4.6" stroke="#C9922F" stroke-width=".9" opacity=".8"/>
+            </g>
           </g>
-          <g class="bird-beak">
-            <path d="M25 2L37 4.6L25 7.4Z" fill="#F0B95A"/>
-            <path d="M25 4.7L37 4.6" stroke="#C9922F" stroke-width=".9" opacity=".8"/>
-          </g>
-        </g>
 
-        <g class="bird-notes" fill="#6B4B8A" opacity="0">
-          <text x="-36" y="-10" font-family="Fraunces, serif" font-size="18">♪</text>
-          <text x="-18" y="-26" font-family="Fraunces, serif" font-size="13">♫</text>
+          <g class="bird-notes" fill="#6B4B8A" opacity="0">
+            <text x="-36" y="-10" font-family="Fraunces, serif" font-size="18">♪</text>
+            <text x="-18" y="-26" font-family="Fraunces, serif" font-size="13">♫</text>
+          </g>
         </g>
       </g>
 
@@ -590,15 +606,17 @@
         <path d="M-46 60h92l-10 76a14 14 0 0 1 -14 12h-44a14 14 0 0 1 -14 -12Z" fill="#CE8F63"/>
         <path d="M-46 60h92l-3 14h-86Z" fill="#B87A50"/>
         <path d="M-40 60h80l-4 -14h-72Z" fill="#6B4A35"/>
-        <g stroke="#3F5A43" stroke-width="5" fill="none" stroke-linecap="round">
-          <path d="M0 46C-4 8 -22 -22 -44 -40M0 46C4 6 22 -24 42 -44M0 46C0 10 0 -20 2 -56"/>
-        </g>
-        <g class="sway" fill="#5F8A63">
-          <path d="M-44 -40C-72 -48 -84 -78 -66 -90C-46 -84 -38 -60 -44 -40Z"/>
-          <path d="M42 -44C70 -54 84 -82 66 -94C46 -88 36 -64 42 -44Z"/>
-          <path d="M2 -56C-14 -74 -8 -102 8 -106C20 -88 14 -66 2 -56Z"/>
-          <path d="M-28 -6C-52 -6 -66 -26 -54 -38C-38 -34 -30 -20 -28 -6Z" opacity=".85"/>
-          <path d="M26 -10C50 -12 64 -32 52 -44C36 -38 28 -24 26 -10Z" opacity=".85"/>
+        <g class="plant sway">
+          <g stroke="#3F5A43" stroke-width="5" fill="none" stroke-linecap="round">
+            <path d="M0 46C-4 8 -22 -22 -44 -40M0 46C4 6 22 -24 42 -44M0 46C0 10 0 -20 2 -56"/>
+          </g>
+          <g class="leaves" fill="#5F8A63">
+            <path d="M-44 -40C-72 -48 -84 -78 -66 -90C-46 -84 -38 -60 -44 -40Z"/>
+            <path d="M42 -44C70 -54 84 -82 66 -94C46 -88 36 -64 42 -44Z"/>
+            <path d="M2 -56C-14 -74 -8 -102 8 -106C20 -88 14 -66 2 -56Z"/>
+            <path d="M-28 -6C-52 -6 -66 -26 -54 -38C-38 -34 -30 -20 -28 -6Z" opacity=".85"/>
+            <path d="M26 -10C50 -12 64 -32 52 -44C36 -38 28 -24 26 -10Z" opacity=".85"/>
+          </g>
         </g>
       </g>
 
@@ -667,7 +685,7 @@
         <form class="password-gate" id="password-gate" hidden>
           <p class="gate-label">Password</p>
           <input id="password-input" type="text" autocomplete="off" spellcheck="false" aria-label="Password" placeholder="…">
-          <p class="gate-msg" id="gate-msg">Hint: the bird knows.</p>
+          <p class="gate-msg" id="gate-msg">Hint: the note on the desk.</p>
           <div class="gate-actions">
             <button type="button" class="screen-btn screen-btn--ghost" id="gate-cancel">Back</button>
             <button type="submit" class="screen-btn screen-btn--primary">Enter</button>
@@ -760,12 +778,12 @@
   </button>
 
   <div class="coach" id="coach" hidden>
-    <p class="coach-line">Everything here is a place. Start with one:</p>
+    <p class="coach-line">Pick a place to start:</p>
     <div class="coach-actions">
       <button type="button" class="coach-chip" data-coach-site="research">Research <span aria-hidden="true">→</span></button>
       <button type="button" class="coach-chip" data-coach-site="projects">Projects <span aria-hidden="true">→</span></button>
       <button type="button" class="coach-chip" data-coach-site="recognition">Awards <span aria-hidden="true">→</span></button>
-      <button type="button" class="coach-chip coach-chip--plain" data-coach-reading="1">Just the text</button>
+      <button type="button" class="coach-chip coach-chip--plain" data-coach-reading="1">Resume</button>
       <button type="button" class="coach-chip coach-chip--guide" data-coach-guide="1">All places</button>
     </div>
     <button type="button" class="coach-close" data-coach-close="1" aria-label="Dismiss">×</button>
@@ -805,14 +823,14 @@
   <div class="setting-row">
     <div>
       <p class="setting-name">Music</p>
-      <p class="setting-desc">A quiet loop, played live.</p>
+      <p class="setting-desc">A quiet loop, generated in the browser.</p>
     </div>
     <button class="switch" id="set-music" role="switch" aria-checked="true" aria-label="Music" type="button"><span></span></button>
   </div>
   <div class="setting-row">
     <div>
       <p class="setting-name">Sound effects</p>
-      <p class="setting-desc">Birds, footsteps, paper.</p>
+      <p class="setting-desc">Short sounds for clicks, steps, and the bird.</p>
     </div>
     <button class="switch" id="set-sfx" role="switch" aria-checked="true" aria-label="Sound effects" type="button"><span></span></button>
   </div>
@@ -824,29 +842,29 @@
   </div>
   <div class="setting-row">
     <div>
-      <p class="setting-name">Reading view</p>
-      <p class="setting-desc">A plain, static version of this site. No field, no walking.</p>
+      <p class="setting-name">Professional resume</p>
+      <p class="setting-desc">The same content as a conventional, scrollable page.</p>
     </div>
-    <button class="switch" id="set-static" role="switch" aria-checked="false" aria-label="Reading view" type="button"><span></span></button>
+    <button class="switch" id="set-static" role="switch" aria-checked="false" aria-label="Professional resume" type="button"><span></span></button>
   </div>
   <div class="setting-row">
     <div>
       <p class="setting-name">Reduce motion</p>
-      <p class="setting-desc">Stills the wind, the water, and the lights.</p>
+      <p class="setting-desc">Turns off the field animations.</p>
     </div>
     <button class="switch" id="set-motion" role="switch" aria-checked="false" aria-label="Reduce motion" type="button"><span></span></button>
   </div>
   <div class="setting-row">
     <div>
       <p class="setting-name">Back to the desk</p>
-      <p class="setting-desc">The room you came in through.</p>
+      <p class="setting-desc">Return to the room you started in.</p>
     </div>
     <button class="mini-btn" id="set-desk" type="button">Go back</button>
   </div>
   <div class="setting-row">
     <div>
       <p class="setting-name">Reset the field</p>
-      <p class="setting-desc">Cranes, secrets, and all. Starts over.</p>
+      <p class="setting-desc">Clears collected cranes and the unlocked gate.</p>
     </div>
     <button class="mini-btn" id="set-reset" type="button">Reset</button>
   </div>

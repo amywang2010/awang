@@ -97,14 +97,14 @@
       if (AW.Eggs) AW.Eggs.bloom();
       if (AW.World && AW.World.unlockGate) AW.World.unlockGate();
     } else if (value === 'bird' || value === 'manolis' || value === 'mantis') {
-      gateMsg.textContent = 'Close. The bird has a purple thumb, not a password.';
+      gateMsg.textContent = 'Not quite. The hint is on the sticky note.';
       gateMsg.className = 'gate-msg';
       shakeScreen();
     } else {
       var tries = [
         'Not that one. Try the plant by the window.',
-        'Nope. The bird is laughing at you.',
-        'Still not it. One word, a flower.'
+        'Not quite. One word, a flower.',
+        'Still not it. The note on the desk says it.'
       ];
       state.tries = (state.tries || 0) + 1;
       gateMsg.textContent = tries[(state.tries - 1) % tries.length];
@@ -126,26 +126,78 @@
      Bird
      --------------------------------------------------------- */
   var birdLines = [
-    'The orchid by the window is not just for show.',
-    'You are early. She usually wakes up around noon.',
-    'Try the password. It is sitting on the desk.',
+    'The orchid by the window is worth a look.',
+    'You are early. I usually wake up around noon.',
+    'The password is written on the desk.',
     'I have been on this monitor since Tuesday.',
-    'Careful: the field has at least seven paper cranes.'
+    'There are seven paper cranes in the field.'
   ];
   var birdIdx = 0;
 
+  var birdSeq = 0;
+  var birdTimer = null;
+
+  function birdClear() {
+    bird.classList.remove('look-l', 'look-r', 'look-down', 'preen', 'hop', 'flick', 'chirp', 'is-looking', 'is-preening');
+  }
+
+  function birdDo(classes, ms) {
+    birdClear();
+    void bird.offsetWidth;
+    classes.forEach(function (c) { bird.classList.add(c); });
+    var seq = ++birdSeq;
+    if (ms) {
+      setTimeout(function () {
+        if (seq === birdSeq) birdClear();
+      }, ms);
+    }
+  }
+
   function chirp() {
     if (AW.Audio) AW.Audio.chirp();
-    bird.classList.remove('chirp');
-    void bird.offsetWidth;
-    bird.classList.add('chirp');
-    setTimeout(function () { bird.classList.remove('chirp'); }, 1500);
+    birdDo(['chirp'], 1700);
+  }
+
+  function birdLook() {
+    var r = Math.random();
+    var cls = r < 0.36 ? 'look-l' : r < 0.68 ? 'look-r' : 'look-down';
+    birdDo([cls, 'is-looking'], 2200 + Math.random() * 900);
+  }
+
+  function birdPreen() {
+    birdDo(['preen', 'is-preening'], 2800);
+    setTimeout(function () { if (AW.Audio) AW.Audio.paper(); }, 420);
+    setTimeout(function () { if (AW.Audio) AW.Audio.paper(); }, 1200);
+  }
+
+  function birdHop() {
+    birdDo(['hop'], 960);
+    if (AW.Audio) AW.Audio.click();
+  }
+
+  function birdFlick() {
+    birdDo(['flick'], 860);
   }
 
   function birdTalk() {
     chirp();
     AW.say(birdLines[birdIdx % birdLines.length], { x: 44, y: 34 });
     birdIdx++;
+  }
+
+  /* she keeps her own schedule: look, chirp, preen, hop, flick */
+  function birdLoop() {
+    birdTimer = setTimeout(function () {
+      if (!desk.hidden && !leaving && !document.hidden && !AW.prefersReducedMotion()) {
+        var r = Math.random();
+        if (r < 0.28) birdLook();
+        else if (r < 0.54) chirp();
+        else if (r < 0.72) birdPreen();
+        else if (r < 0.87) birdHop();
+        else birdFlick();
+      }
+      birdLoop();
+    }, 2300 + Math.random() * 3300);
   }
 
   /* ---------------------------------------------------------
@@ -299,8 +351,8 @@
     var orchid = document.getElementById('orchid');
     if (orchid) {
       orchid.addEventListener('click', function () {
-        chirp();
-        AW.say('That one is an orchid. Not just for show.', { x: 31, y: 58 });
+        if (AW.Audio) AW.Audio.paper();
+        AW.say('An orchid. It leans toward the window.', { x: 31, y: 58 });
       });
       orchid.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); orchid.dispatchEvent(new MouseEvent('click')); }
@@ -309,7 +361,7 @@
 
     document.getElementById('sticky').addEventListener('click', function () {
       if (AW.Audio) AW.Audio.paper();
-      AW.say('“water the bird” — she never does', { x: 58, y: 45 });
+      AW.say('A note to self: water the orchid.', { x: 58, y: 45 });
     });
 
     document.getElementById('screen-frame').addEventListener('click', function (e) {
@@ -366,11 +418,7 @@
       state.seenIntro = true;
       AW.save();
     }
-    // nudge: the bird chirps on its own now and then
-    setInterval(function () {
-      if (desk.hidden || leaving || document.hidden) return;
-      if (Math.random() > 0.55) chirp();
-    }, 11000);
+    birdLoop();
   }
 
   if (document.readyState === 'loading') {

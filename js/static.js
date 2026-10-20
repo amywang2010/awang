@@ -41,6 +41,11 @@
         '<p class="w-blurb">' + esc(g.blurb) + '</p></div></article>';
     }).join('');
 
+    var featured = C.recognition.featured ? '<div class="rec-featured">' + C.recognition.featured.map(function (f) {
+      return '<div class="rec-flag"><span class="rec-flag-name">' + esc(f.label) + '</span>' +
+        '<span class="rec-flag-detail">' + esc(f.detail) + '</span></div>';
+    }).join('') + '</div>' : '';
+
     var recognition = C.recognition.groups.map(function (g) {
       return '<div class="rec-group"><h3>' + esc(g.title) + '</h3><ul>' + g.items.map(function (it) {
         return '<li><span class="rec-name">' + esc(it.label) + '</span>' +
@@ -63,7 +68,7 @@
         '<a class="site-mark" href="#top" aria-label="Amy Wang, back to top">Amy Wang</a>' +
         '<nav aria-label="Sections">' +
           '<a href="#about">About</a><a href="#research">Research</a><a href="#work">Work</a>' +
-          '<a href="#recognition">Recognition</a><a href="#projects">Projects</a><a href="#off">Off the clock</a><a href="#contact">Contact</a>' +
+          '<a href="#recognition">Recognition</a><a href="#projects">Projects</a><a href="#off">Outside the lab</a><a href="#contact">Contact</a>' +
         '</nav>' +
         '<button class="mode-btn" id="to-field" type="button">Interactive version</button>' +
       '</header>' +
@@ -107,6 +112,7 @@
         '<section class="s-section" id="recognition">' +
           '<div class="s-head"><span>04</span><h2>Recognition</h2></div>' +
           '<p class="s-intro">' + C.recognition.intro + '</p>' +
+          featured +
           '<div class="rec-grid">' + recognition + '</div>' +
         '</section>' +
 
@@ -116,7 +122,7 @@
         '</section>' +
 
         '<section class="s-section" id="off">' +
-          '<div class="s-head"><span>06</span><h2>Off the clock</h2></div>' +
+          '<div class="s-head"><span>06</span><h2>Outside the lab</h2></div>' +
           '<div class="s-about">' +
             '<div class="s-about-text">' + C.arts.paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
             '<aside class="s-aside"><dl>' + C.arts.facts.map(function (f) {

@@ -70,10 +70,14 @@
     },
 
     recognition: function () {
+      var featured = C.recognition.featured ? '<div class="rec-featured">' + C.recognition.featured.map(function (f) {
+        return '<div class="rec-flag"><span class="rec-flag-name">' + esc(f.label) + '</span>' +
+          '<span class="rec-flag-detail">' + esc(f.detail) + '</span></div>';
+      }).join('') + '</div>' : '';
       return {
         kicker: C.recognition.kicker,
         title: C.recognition.title,
-        body: '<p>' + C.recognition.intro + '</p>' + C.recognition.groups.map(function (g) {
+        body: '<p>' + C.recognition.intro + '</p>' + featured + C.recognition.groups.map(function (g) {
           return '<p class="group-head">' + esc(g.title) + '</p>' + g.items.map(function (it) {
             return '<div class="award"><span class="award-name">' + esc(it.label) + '</span>' +
               '<span class="award-detail">' + esc(it.detail || '') + '</span></div>';
@@ -149,20 +153,21 @@
     },
 
     bench: function () {
-      var thoughts = [
-        'Every measurement is a story about what the instrument could not see. Most arguments in biology are really arguments about instruments.',
-        'Memory looks like compression with loss, and personality looks like whatever survived the compression.',
-        'A p-value answers a question nobody asked. What you want to know is how likely it is that you are wrong.',
-        'Bach used the same four-chord loop for forty years and never ran out. I think about that when I worry about repeating myself.',
-        'Cells in a tumour cooperate until they stop. Plenty of institutions follow the same curve.',
-        'Phase separation looks like nothing happening, and then it is a droplet. Most transitions worth studying look like that.'
+      var facts = [
+        'A fruit fly has about 140,000 neurons and roughly 50 million synapses. The complete wiring diagram was published in 2024, assembled by a large consortium from electron microscopy.',
+        'Almost every cell in your body carries the same genome. What separates a neuron from a skin cell is which genes are switched on, not which genes are present.',
+        'Protein-coding DNA is about 1.5% of the human genome. Much of the rest decides when and where those genes are read.',
+        'The retina develops as an outgrowth of the embryonic brain. It is the only part of the central nervous system you can photograph directly.',
+        'Alzheimer\u2019s pathology begins well before symptoms. Amyloid biomarkers can be abnormal 15 to 20 years before diagnosis, which is the window early detection is trying to reach.',
+        'APOE4 is the strongest common genetic risk factor for late-onset Alzheimer\u2019s, but carrying it is neither necessary nor sufficient to develop the disease.',
+        'Bacteria can survive antibiotics without resistance mutations by entering a dormant, tolerant state. Tolerance is not resistance, and it is one reason infections relapse after treatment.',
+        'Proteins can condense into droplets without a membrane. Tau does this inside neurons, and the physics of these condensates is now a major area of cell biology.'
       ];
-      var line = thoughts[Math.floor(Math.random() * thoughts.length)];
+      var line = facts[Math.floor(Math.random() * facts.length)];
       return {
         kicker: 'A minute',
         title: 'On the bench',
-        body: '<p style="font-family:var(--font-display);font-size:1.25rem;line-height:1.5;color:var(--ink)">' + line + '</p>' +
-          notes('The pond does most of the entertaining here.'),
+        body: '<p style="font-family:var(--font-display);font-size:1.25rem;line-height:1.5;color:var(--ink)">' + line + '</p>',
         foot: ''
       };
     },
@@ -183,7 +188,7 @@
           }).join('') + '</div>' +
           '<p class="panel-note">' + G.reading + '</p>',
         foot: '<div class="contact-actions">' +
-          '<button class="btn-ink" type="button" data-reading="1">Open the reading version</button>' +
+          '<button class="btn-ink" type="button" data-reading="1">Open the professional resume</button>' +
           '<button class="btn-outline" type="button" data-close-panel="1">Back to the field</button>' +
           '</div>'
       };
@@ -204,7 +209,7 @@
       }
       var body = '<p>' + (have.length ? 'You have found ' + have.length + ' of 7 folded paper cranes. They are scattered around the field, usually near something worth looking at.' : C.journal.empty) + '</p>' +
         '<div class="crane-grid">' + slots + '</div>' +
-        (have.length === total ? notes('All seven. Marmalade says you have good eyes.') : '');
+        (have.length === total ? notes('All seven collected.') : '');
       return { kicker: 'Journal', title: C.journal.title, body: body, foot: '' };
     }
   };

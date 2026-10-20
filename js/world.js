@@ -347,19 +347,19 @@
      --------------------------------------------------------- */
   var SITES = [
     { id: 'about', x: 1650, y: 1520, art: 'cottage', artW: 320, label: 'the cottage', verb: 'Look around the cottage', nudge: 'about',
-      blurb: 'Grade 11 at St. Robert IB, and the Kellis Lab at MIT CSAIL.' },
+      blurb: 'Grade 11 at St. Robert IB, research at the Kellis Lab, MIT CSAIL.' },
     { id: 'research', x: 2650, y: 1480, art: 'observatory', artW: 300, label: 'the observatory', verb: 'Start reading', nudge: 'research',
       blurb: 'Seven projects: certified statistics, a drug engine, an Alzheimer’s pipeline.' },
     { id: 'recognition', x: 3230, y: 2010, art: 'laurels', artW: 300, label: 'the laurels', verb: 'See the shelf', nudge: 'recognition',
-      blurb: 'DECA, FBLA, HOSA, a CWSF gold medal, and the smaller things.' },
-    { id: 'projects', x: 1020, y: 2350, art: 'workshop', artW: 320, label: 'the workshop', verb: 'See what is on the easel', nudge: 'projects',
-      blurb: 'Mantis, Window to the Mind, Heartware, and this field.' },
+      blurb: 'Competition results, academic results, and certifications.' },
+    { id: 'projects', x: 1020, y: 2350, art: 'workshop', artW: 320, label: 'the workshop', verb: 'See the projects', nudge: 'projects',
+      blurb: 'Mantis, Window to the Mind, Heartware, and CNScope.' },
     { id: 'arts', x: 2330, y: 1440, art: 'gramophone', artW: 240, label: 'the gramophone', verb: 'Listen', nudge: 'arts',
-      blurb: 'Flute and piano at RCM 10, a band summer, and poetry.' },
+      blurb: 'Music, poetry, and teaching swimming.' },
     { id: 'contact', x: 1620, y: 2580, art: 'mailbox', artW: 170, label: 'the mailbox', verb: 'Write a letter', nudge: 'contact',
-      blurb: 'Email reaches me faster than anything else.' },
+      blurb: 'Email and LinkedIn.' },
     { id: 'bench', x: 2810, y: 2455, art: 'bench', artW: 210, label: 'the bench', verb: 'Sit for a minute', nudge: 'bench',
-      blurb: 'One thought, changed each time you sit down.' },
+      blurb: 'A science fact, different each visit.' },
     { id: 'secret', x: 430, y: 820, art: 'gate', artW: 270, label: 'the garden gate', verb: 'Go through', nudge: 'secret', locked: true,
       blurb: 'Locked, unless you found the password on the desk.' }
   ];
@@ -874,7 +874,7 @@
     if (AW.Panels) AW.Panels.updateCranes();
     var n = state.cranes.length;
     if (n === CRANE_SPOTS.length) {
-      AW.toast('All seven. Marmalade is impressed.');
+      AW.toast('All seven paper cranes found.');
       if (AW.Audio) AW.Audio.unlock();
     } else {
       AW.toast('Paper crane ' + n + ' of 7 \u2014 ' + (CRANE_SPOTS.length - n) + ' still hiding.');
@@ -892,7 +892,7 @@
 
   function goToStation(site) {
     if (site.locked && !state.secretUnlocked) {
-      AW.toast('The gate is locked. The bird knows the password.');
+      AW.toast('The gate is locked. The password is on the desk.');
       return;
     }
     var dx = p.x - site.x;

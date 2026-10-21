@@ -16,14 +16,14 @@
     hero: {
       line1: 'Spatial genomics,',
       line2: 'drug discovery, and retinal imaging.',
-      intro: 'I work with the Kellis Lab at MIT CSAIL on Mantis, a platform for navigating scientific data. My own research is on whether a statistical claim survives its assumptions. I also founded Heartware, a documentary and workshop programme for seniors in care homes.',
+      intro: 'I sit on the executive leadership team at the Kellis Lab, MIT CSAIL, where I build the lab\u2019s research platform and lead its research direction. My own work asks whether a statistical claim survives its assumptions. I also founded Heartware, a documentary and workshop programme for seniors in care homes.',
       meta: 'Richmond Hill, Ontario \u00b7 Grade 11 \u00b7 IB'
     },
 
     stats: [
       { value: '~1M', label: 'compounds screened in two hours on one GPU' },
       { value: '28 of 73', label: 'significant cell\u2013cell calls that fail certification' },
-      { value: '167k', label: 'points in the largest Mantis map I built' },
+      { value: '167k', label: 'points in the largest Kellis Lab map I built' },
       { value: '500+', label: 'seniors and youth reached through Heartware' }
     ],
 
@@ -31,7 +31,7 @@
       kicker: 'About',
       title: 'Amy Wang',
       paragraphs: [
-        'I am in Grade 11 in the International Baccalaureate programme at St. Robert Catholic High School in Richmond Hill, Ontario. Since 2025 I have worked with the Kellis Lab at MIT CSAIL on Mantis, a platform that turns genomic, structural, and clinical data into maps researchers can navigate. I sit on the lab\u2019s executive leadership team and lead research direction for the platform.',
+        'I am in Grade 11 in the International Baccalaureate programme at St. Robert Catholic High School in Richmond Hill, Ontario. Since 2025 I have worked at the Kellis Lab, MIT CSAIL, on a research platform that turns genomic, structural, and clinical data into maps researchers can navigate. I sit on the lab\u2019s executive leadership team, where I lead research direction for the platform and set what the team ships next.',
         'Most of my lab work is engineering. I designed the extension SDK that lets outside developers add interactive layers to a map, built the publication and review layer behind the shared catalogue, and wrote the agent framework that lets models call external tools and check their hypotheses against evidence on the map, with provenance kept through the whole chain. The largest map I have worked on holds about 167,000 embedded points.',
         'My own research asks whether a statistical claim survives its own assumptions. In spatial transcriptomics, every cell\u2013cell interaction depends on segmentation, the step that decides which cell owns which RNA molecule; move the boundary and an interaction can weaken, disappear, or reverse. I wrote a framework that reports each interaction as an interval valid across every defensible segmentation, and confirms a call only when a matched permutation test agrees on its direction. On public Xenium breast-cancer sections, 28 of the 73 calls that standard analysis reports as significant are not identifiable, and 6 reverse direction.',
         'Before the lab I built Window to the Mind, a retinal imaging project that looks for vascular signs of Alzheimer\u2019s in fundus photographs; it won gold at the Canada-Wide Science Fair. Outside research I run Heartware, which has produced a documentary and a workshop series with seniors in care homes, raised more than $8,000 across eight funding rounds, and reached over 500 people. I play flute and piano, teach swimming, and handle logistics for Girls in Med.'
@@ -77,7 +77,7 @@
         id: 'drug',
         year: '2026',
         field: 'Drug discovery \u00b7 high-throughput screening',
-        title: 'A virtual screening engine inside Mantis',
+        title: 'A virtual screening engine for the Kellis Lab platform',
         sub: 'Built natively in the platform; about one million compounds in two hours on one GPU',
         body: [
           'The engine takes a receptor structure, enumerates candidate libraries, filters out compounds that fail tiered physical-property checks before any physics is run, and screens what remains. On a single RTX 4090 it works through roughly one million compounds in two hours, close to a hundred per second, which makes an overnight campaign possible on a desktop card instead of a cluster.',
@@ -114,10 +114,10 @@
         id: 'mantis',
         year: '2025\u2013',
         field: 'Platform engineering \u00b7 agentic systems',
-        title: 'Platform engineering on Mantis',
-        sub: 'Extension SDK, publication layer, and agentic target discovery at the Kellis Lab',
+        title: 'Platform engineering at the Kellis Lab',
+        sub: 'Extension SDK, publication layer, and agentic target discovery for the lab\u2019s research platform',
         body: [
-          'Mantis maps genomes, molecular structures, patient records, and literature into navigable spaces that become the reasoning context for AI. I joined the lab in 2025 and started shipping what the platform was missing: dozens of merged pull requests across Mantis and MantisAPI, about 30 of them in a single week during the first release push.',
+          'The Kellis Lab platform maps genomes, molecular structures, patient records, and literature into navigable spaces that become the reasoning context for AI. I joined the lab in 2025 and started shipping what it was missing: dozens of merged pull requests across the platform and its API, about 30 of them in a single week during the first release push.',
           'The largest piece is the extension system. I architected the SDK end to end, which gives outside developers event-driven interactivity with the map surface, plugin-drawn edges between points, programmatic work on saved selections, and extension state lifecycle with per-space registry isolation. On top of that sits the publication layer: a browsable global catalogue with a shared taxonomy, publication policy set per space, artifact-bound package acceptance, security permissions, and a model-backed review step that resolves routine flags and escalates only real ones.',
           'I also built the agentic framework behind single-cell target discovery, where agents reason over external computational tools and reconcile hypotheses against evidence on the live map with provenance carried through the chain. It runs on production maps of more than 100,000 embedded points. The unified upload pipeline came next: any file becomes an annotated dataset and map space, with generated reports and cluster guides, and a logging layer that saves a whole workflow as a reusable template.'
         ],
@@ -136,7 +136,7 @@
         title: 'An Alzheimer\u2019s workflow adopted as the lab benchmark',
         sub: 'Four data modalities in one traceable chain',
         body: [
-          'I built an end-to-end Alzheimer\u2019s research workflow on Mantis: agentic dataset curation, cross-modal embedding of structural MRI neuroanatomy, symptom progression, retinal vascular biomarkers, and literature synthesis, all in one traceable chain. Prof. Kellis adopted it as the lab\u2019s reference benchmark, commissioned training modules around it, and graduate researchers now use it as a template for their own work.',
+          'I built an end-to-end Alzheimer\u2019s research workflow on the lab platform: agentic dataset curation, cross-modal embedding of structural MRI neuroanatomy, symptom progression, retinal vascular biomarkers, and literature synthesis, all in one traceable chain. Prof. Kellis adopted it as the lab\u2019s reference benchmark, commissioned training modules around it, and graduate researchers now use it as a template for their own work.',
           'The retinal component comes from Window to the Mind, my Canada-Wide Science Fair project: a ResNet-101 pipeline that reads fundus photographs for vascular signatures of Alzheimer\u2019s. The workflow is what that model looks like when it has to sit next to imaging, genetics, and the published literature instead of standing alone.'
         ],
         metrics: [
@@ -235,7 +235,7 @@
       groups: [
         {
           period: '2025 \u2014 present',
-          role: 'Executive Leadership Team \u00b7 Lead Admiral, Mantis',
+          role: 'Executive Leadership Team \u00b7 Lead Admiral, research platform',
           org: 'Kellis Lab, MIT CSAIL',
           blurb: 'Research direction for the platform, the extension SDK and shared catalogue, agentic research frameworks, and onboarding for new contributors. Co-led the AI4Science division.'
         },
@@ -285,11 +285,11 @@
       items: [
         {
           title: 'Mantis',
-          sub: 'MIT CSAIL \u00b7 research platform',
-          body: 'A navigable map of scientific literature, genomic data, and molecular structures, used by researchers across the lab. I work on the extension system, the agentic layer, and the workflows researchers use day to day.',
+          sub: 'Kellis Lab, MIT CSAIL \u00b7 research platform',
+          body: 'The lab\u2019s map of scientific literature, genomic data, patient records, and molecular structures, used by researchers across MIT. I lead the extension system, the agentic layer, and the workflows researchers use day to day. Shown here: clinical coverage around Holy Name Medical Center, 1,449 census tracts against travel time to the nearest clinic.',
           img: 'assets/mantis.webp',
-          imgAlt: 'The Mantis platform interface',
-          imgCaption: 'Mantis, MIT CSAIL',
+          imgAlt: 'A Mantis map of clinical coverage in northern New Jersey, with a layer panel and distribution panels',
+          imgCaption: 'Mantis \u00b7 clinical coverage, Holy Name Medical Center',
           link: 'https://mantis.csail.mit.edu',
           linkLabel: 'mantis.csail.mit.edu'
         },
@@ -315,11 +315,11 @@
         },
         {
           title: 'CNScope',
-          sub: 'Mantis \u00b7 Drosophila connectomics',
-          body: 'Wiring diagrams of the fly brain cross-referenced against FlyBase genetics inside Mantis, so a circuit and the genes behind it sit in one map instead of two tabs.',
+          sub: 'Built by our team \u00b7 Drosophila connectomics',
+          body: 'A connectomics workspace we built at the Kellis Lab. All 138,556 annotated somata of the MaleCNS connectome sit in one scene, with eight named circuits, predicted transmitter populations, and FlyBase genetics on the same map, so a circuit and the genes behind it stop being two tabs. Cartographer answers the question in plain language and draws the proteins it is reasoning about beside the answer.',
           img: 'assets/cnscope.webp',
-          imgAlt: 'Three-dimensional reconstruction of the Drosophila brain',
-          imgCaption: 'Drosophila brain reconstruction. Image: Wikimedia Commons, CC BY-SA',
+          imgAlt: 'CNScope: the Cartographer reasoning panel, the MaleCNS connectome point cloud, and an AlphaFold model of LRRK2',
+          imgCaption: 'CNScope \u00b7 Cartographer, the MaleCNS connectome, and LRRK2',
           link: 'https://mantis.csail.mit.edu',
           linkLabel: 'mantis.csail.mit.edu'
         }
@@ -357,7 +357,7 @@
         { site: 'about', place: 'the cottage', what: 'About me: school, the lab, and what I work on.' },
         { site: 'research', place: 'the observatory', what: 'Seven research projects and the numbers behind them.' },
         { site: 'recognition', place: 'the laurels', what: 'Competition results, academic results, and certifications.' },
-        { site: 'projects', place: 'the workshop', what: 'Mantis, Window to the Mind, Heartware, and CNScope.' },
+        { site: 'projects', place: 'the workshop', what: 'The Kellis Lab platform, Window to the Mind, Heartware, and CNScope.' },
         { site: 'arts', place: 'the gramophone', what: 'Music, poetry, and teaching swimming.' },
         { site: 'contact', place: 'the mailbox', what: 'Email and LinkedIn.' },
         { site: 'bench', place: 'the bench', what: 'A science fact to sit with.' },

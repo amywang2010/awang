@@ -353,7 +353,7 @@
     { id: 'recognition', x: 3230, y: 2010, art: 'laurels', artW: 300, label: 'the laurels', verb: 'See the shelf', nudge: 'recognition',
       blurb: 'Competition results, academic results, and certifications.' },
     { id: 'projects', x: 1020, y: 2350, art: 'workshop', artW: 320, label: 'the workshop', verb: 'See the projects', nudge: 'projects',
-      blurb: 'Mantis, Window to the Mind, Heartware, and CNScope.' },
+      blurb: 'The Kellis Lab platform, Window to the Mind, Heartware, and CNScope.' },
     { id: 'arts', x: 2330, y: 1440, art: 'gramophone', artW: 240, label: 'the gramophone', verb: 'Listen', nudge: 'arts',
       blurb: 'Music, poetry, and teaching swimming.' },
     { id: 'contact', x: 1620, y: 2580, art: 'mailbox', artW: 170, label: 'the mailbox', verb: 'Write a letter', nudge: 'contact',
